@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Provisioning a Raspberry Pi (without an SD Card Reader)</title>
+	<meta name="description" content="A blog about amateur radio and infosec.">
+	<meta name="author" content="Joshua Murphy">
+	<link rel="stylesheet" href="/css/style.css">
+	
+</head>
+<body>
+	<header>
+	<a href="https://vo1rfx.ca/">VO1RFX</a>
+	
+	<nav>
+		<ul>
+			
+			<li><a href="/">Home</a></li>
+			
+			<li><a href="/tags/">Tags</a></li>
+			
+			<li><a href="/about/">About</a></li>
+			
+		</ul>
+	</nav>
+	
+</header>
+
+	
+	<main>
+		<article>
+            <h1>Provisioning a Raspberry Pi (without an SD Card Reader)</h1>
+			<time>14.06.2019 19:07</time>
+			<div>
+				<p>You may also have faced this issue in the past: you have a Raspberry Pi, and a MicroSD card, but no MicroSD card reader. Well, your Raspberry Pi has one. Why can&rsquo;t we use that? Well, if you&rsquo;ve got a Raspberry Pi 3+, you can.</p>
+<h3 id="create-a-recovery--liveusb-from-your-host-machine">Create a recovery / LiveUSB from your host machine</h3>
+<ul>
+<li>Install Raspbian on a USB flash drive. On a Raspberry Pi 3B+, it will automatically boot off of mass storage device, like your Raspbian live USB. We will use this in order to &lsquo;free up&rsquo; the MicroSD card slot, and burn our image from the Raspberry Pi itself.</li>
+</ul>
+<p><em>It will also be useful as a recovery Live USB in case you ever do something to a Raspbian install that you can&rsquo;t fix, like breaking a config file</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lsblk <span style="color:#75715e"># Find your USB Device</span>
+wget https://downloads.raspberrypi.org/raspbian_full_latest
+sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>raspbian_image.img of<span style="color:#f92672">=</span>/dev/sdX bs<span style="color:#f92672">=</span>4M
+</code></pre></div><h3 id="enable-ssh">Enable SSH</h3>
+<ul>
+<li>Mount the correct partition of the completed USB</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mount /dev/sdX /media/boot/
+cd boot/
+ls
+
+<span style="color:#75715e"># Your output will be something like this</span>
+bcm2708-rpi-0-w.dtb     bcm2710-rpi-3-b-plus.dtb  fixup_cd.dat  kernel.img        start.elf
+bcm2708-rpi-b.dtb       bcm2710-rpi-cm3.dtb       fixup.dat     LICENCE.broadcom  start_x.elf
+bcm2708-rpi-b-plus.dtb  bootcode.bin              fixup_db.dat  LICENSE.oracle
+bcm2708-rpi-cm.dtb      cmdline.txt               fixup_x.dat   overlays
+bcm2709-rpi-2-b.dtb     config.txt                issue.txt     start_cd.elf
+bcm2710-rpi-3-b.dtb     COPYING.linux             kernel7.img   start_db.elf
+
+<span style="color:#75715e"># Create a blank file called SSH to enable it on boot.</span>
+touch ssh
+</code></pre></div><h3 id="create-the-raspbian-microsd-from-your-raspberry-pi">Create the Raspbian MicroSD from your Raspberry Pi</h3>
+<p>From the Raspberry Pi (booted off of the Live USB):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lsblk <span style="color:#75715e"># Find your USB Device</span>
+wget https://downloads.raspberrypi.org/raspbian_lite_latest <span style="color:#75715e"># Use Lite image</span>
+sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>raspbian_image of<span style="color:#f92672">=</span>/dev/mccblk0 bs<span style="color:#f92672">=</span>4M
+</code></pre></div><h3 id="configure-the-installation">Configure the installation</h3>
+<ul>
+<li>Enabled SSH as done in the previous step</li>
+<li>On boot, run <code>sudo raspi-config</code> over SSH</li>
+<li>Configure localization, networking and boot options</li>
+</ul>
+<h2 id="creating-a-backup-image-of-the-completed-install">Creating a backup image of the completed install</h2>
+<ul>
+<li>Note: You will need enough free space to backup the <em>entire</em> MicroSD card, that is, you need 64GB of space for a 64GB MicroSD card. It can be compressed after the fact.</li>
+<li>If you don&rsquo;t have a MicroSD card reader, like in my case, you can boot the Raspberry Pi from the LiveUSB, to free up the MicroSD slot in order to read its contents. Then I plug in an external USB hardrive that has enough space for the size of the uncompressed image backup.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/sdX of<span style="color:#f92672">=</span>~/raspbian_backup.img
+</code></pre></div><h3 id="compression-method">Compression method</h3>
+<ul>
+<li>After creating your backup, <code>raspbian.img</code></li>
+<li>Run <code>gzip raspbian.img</code>, creating <code>raspbian.img.gz</code></li>
+<li>Note that to burn the image, run:
+<ul>
+<li><code>cat foo.img.gz | gunzip | dd of=/dev/sdX</code></li>
+</ul>
+</li>
+</ul>
+
+			</div>
+			
+			<div>
+				<ul id="tags">
+					
+					<li><a href="/tags/linux">linux</a></li>
+					
+					<li><a href="/tags/raspberry-pi">raspberry pi</a></li>
+					
+				</ul>
+			</div>
+			
+			
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/post/try-hack-me-basic-pentesting/">TryHackMe Writeup - Basic Pentesting</a></li>
+				
+				<li><a href="/post/raspberry-pi-virtual-development/">Notes on Emulating a Raspberry Pi for Testing &amp; Development</a></li>
+				
+				<li><a href="/post/lets-do-a-pi-thing/">Provisioning a Raspberry Pi (without an SD Card Reader)</a></li>
+				
+				<li><a href="/post/notes-on-mesh-networking-basic-mesh-configurations/">Notes on Mesh Networking: Basic Mesh Configurations</a></li>
+				
+				<li><a href="/post/c64-instructions/">Notes on the 6510 instruction set</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<p>&copy; 2022 <a href="https://vo1rfx.ca/">VO1RFX</a></p>
+</footer>
+
+</body>
+</html>

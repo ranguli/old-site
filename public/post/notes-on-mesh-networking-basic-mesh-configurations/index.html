@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Notes on Mesh Networking: Basic Mesh Configurations</title>
+	<meta name="description" content="A blog about amateur radio and infosec.">
+	<meta name="author" content="Joshua Murphy">
+	<link rel="stylesheet" href="/css/style.css">
+	
+</head>
+<body>
+	<header>
+	<a href="https://vo1rfx.ca/">VO1RFX</a>
+	
+	<nav>
+		<ul>
+			
+			<li><a href="/">Home</a></li>
+			
+			<li><a href="/tags/">Tags</a></li>
+			
+			<li><a href="/about/">About</a></li>
+			
+		</ul>
+	</nav>
+	
+</header>
+
+	
+	<main>
+		<article>
+            <h1>Notes on Mesh Networking: Basic Mesh Configurations</h1>
+			<time>14.06.2019 10:48</time>
+			<div>
+				<p>During my exploration of Mesh Networking with <a href="https://tomesh.net">Tomesh</a>, I realized that mesh networking can look like a lot of different things.</p>
+<h2 id="example-0-simple-one-node-proof-of-concept">Example 0: Simple One Node Proof of Concept</h2>
+<p><img src="/posts/resources/mesh-networking-configurations/mesh_0.svg" alt="Mesh 0"></p>
+<p><em>Figure 0: The simplest mesh network configuration.</em></p>
+<p>The simplest &ldquo;proof of concept&rdquo; configuration to get your own mesh network environment up and running is to create a <a href="https://tomesh.net/">tomesh</a> node, then connect to it with an Ethernet cable. The node will automatically assign an IPv6 address to the client via DHCP. Lots of the networking <em>&ldquo;stuff&rdquo;</em> that would be a head scratcher over a mesh network (i.e IP assignment) is taken care of by either <a href="https://github.com/cjdelisle/cjdns">CJDNS</a> or <a href="https://github.com/yggdrasil-network/yggdrasil-go">Yggdrasil</a>. Tomesh supports both.</p>
+<p><em><strong>Note:</strong></em></p>
+<blockquote>
+<p>In the case of a Raspberry Pi or similar SoC, we can simply use the onboard Ethernet port.</p>
+</blockquote>
+<h3 id="use-cases">Use Cases:</h3>
+<ul>
+<li>You have a Pi kicking around and really want to try what you&rsquo;re seeing.</li>
+<li>Development/testing tasks that only require one node and client.</li>
+</ul>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>Client</li>
+<li>1x node with an Ethernet port</li>
+<li>Ethernet cable</li>
+</ul>
+<h2 id="example-1-one-node-proof-of-concept-with-an-access-point">Example 1: One Node Proof of Concept (with an Access Point)</h2>
+<p><img src="/posts/resources/mesh-networking-configurations/mesh_1.svg" alt="Mesh 1"></p>
+<p><em>Figure 1: Building on top of our previous example.</em></p>
+<p>To take things one step further, we can set up our node to work as an <strong>Access Point</strong>. An access point is quite literally provides a point of access a resource. Our tomesh node uses one of its wireless adapters to create what appears to the end user to be a normal WiFi network. Upon joining the network, the client will be assigned an IPv6 address over DHCP just like before.</p>
+<p><img src="/posts/resources/mesh-networking-configurations/ap.jpg" alt="Access Point">
+<em>Figure 2: A Raspberry Pi node with an external Wireless Adapter</em></p>
+<p><em><strong>Note:</strong></em></p>
+<blockquote>
+<p>In the case of a Raspberry Pi or similar SoC, we can use its onboard WiFi to create the access point.</p>
+</blockquote>
+<h3 id="use-cases-1">Use Cases:</h3>
+<ul>
+<li>You want to improve upon what you created in the last step.</li>
+<li>You hate wires.</li>
+</ul>
+<h3 id="requirements-1">Requirements:</h3>
+<ul>
+<li>Client</li>
+<li>1x node with a free wireless adapter</li>
+</ul>
+<h2 id="example-2-a-minimal-mesh-network-with-an-access-point">Example 2: A Minimal Mesh Network (with an Access Point)</h2>
+<p><img src="/posts/resources/mesh-networking-configurations/mesh_2.svg" alt="Mesh 2"></p>
+<p><em>Figure 3: A &lsquo;proper&rsquo; mesh network, the bare minimum for testing the characteristics of a mesh network.</em></p>
+<p>Now it is time to add more nodes into the mesh network, as it isn&rsquo;t really a network if there is only one node. Here we connect to our first node through the wireless Access Point as usual, but we connect a second node to the first over ethernet.</p>
+<p><em><strong>Note:</strong></em></p>
+<blockquote>
+<p>In the case of a Raspberry Pi, with onboard WiFi <em>and</em> an Ethernet port, the node can create an Access Point to allow clients to connect not only to itself, but to peers that it&rsquo;s connected to over its Ethernet connection.</p>
+</blockquote>
+<h3 id="use-cases-2">Use Cases:</h3>
+<ul>
+<li>Basic testing/development setup that requires two nodes in order to work with mesh network characteristics</li>
+</ul>
+<h3 id="requirements-2">Requirements:</h3>
+<ul>
+<li>Client</li>
+<li>1x Node with an a free wireless adapter and Ethernet port</li>
+<li>1x with an Ethernet port</li>
+<li>1x Ethernet cable</li>
+</ul>
+<h2 id="example-3-a-minimal-mesh-network-without-an-access-point">Example 3: A Minimal Mesh Network (without an Access Point)</h2>
+<p><img src="/posts/resources/mesh-networking-configurations/mesh_3.svg" alt="Mesh 3"></p>
+<p><em>Figure 5: A &lsquo;proper&rsquo; mesh network. Instead of interfacing with it through an Access Point, we cheat and use serial.</em></p>
+<p>In Example 2, we made the assumption that you had at least one node with a WiFi adapter. This may not always be the case. If you don&rsquo;t have a WiFi adapter, but you do have a node with GPIO pins (like an SoC), there is a chance you may have a <a href="https://www.creatroninc.com/product/usb-to-ttl-serial-cable-debugging-for-raspberry-pi/?search_query=pi+serial&amp;results=3">USB to Serial TTL cable</a>.</p>
+<p><img src="/posts/resources/mesh-networking-configurations/gpio.jpg" alt="USB TTL Cable">
+<em>Figure 4: The GPIO board of a Raspberry Pi. Connected to it are the pins for a USB to Serial TTL cable, allowing a direct hardware connection to the machine</em></p>
+<p><em><strong>Note</strong></em>:</p>
+<blockquote>
+<p>This example really isn&rsquo;t designed with deployment in mind, as serial access in this context is only practically useful for shell access. In fact, development and testing are the only purposes I could see this being used for. Your client doesn&rsquo;t <em>become</em> part of the network, you&rsquo;re just hijacking a node that is on the network.</p>
+</blockquote>
+<h3 id="use-cases-3">Use Cases:</h3>
+<ul>
+<li>For when you require a barebones development/testing setup</li>
+</ul>
+<h3 id="requirements-3">Requirements:</h3>
+<ul>
+<li>Client</li>
+<li>1x USB to Serial TTL Cable</li>
+<li>1x node with GPIO/Serial pinout and Ethernet port</li>
+<li>1x node with Ethernet port</li>
+<li>1x Ethernet cable</li>
+</ul>
+<h2 id="example-4-a-fully-wireless-mesh-network">Example 4: A Fully Wireless Mesh Network</h2>
+<p><img src="/posts/resources/mesh-networking-configurations/mesh_4.svg" alt="Mesh 4"></p>
+<p><em>Figure 6: One real-world example of a mesh network. Node 1 serves as an Access Point, and it connects to Node 2. Node 2 can also be an Access Point with the right hardware.</em></p>
+<p>Considering in the real world a mesh network may be spread over large distances, we can not always assume Ethernet will be involved.</p>
+<p><em><strong>Note:</strong></em></p>
+<blockquote>
+<p>For two nodes to connect to each other wirelessly, they must use either Ad-Hoc or Mesh Point Interface technology. Not all NICs support the later. If a node is also meant to be used as an Access Point, it must have <em>two</em> wireless adapters: one to host the Access Point, and one to connect to another node via Ad-Hoc or MPI.</p>
+</blockquote>
+<h3 id="use-cases-4">Use Cases:</h3>
+<ul>
+<li>A wireless version of the barebones development/testing setup</li>
+<li>The groundwork of a mesh network</li>
+</ul>
+<h3 id="requirements-4">Requirements:</h3>
+<ul>
+<li>Client</li>
+<li>1x node with 2x wireless adapters</li>
+<li>1x node with 1x wireless adapter</li>
+</ul>
+<h2 id="example-5-the-real-world-wiredwireless-hybrid-mesh">Example 5: The Real World (Wired/Wireless Hybrid Mesh)</h2>
+<p><img src="/posts/resources/mesh-networking-configurations/mesh_5.svg" alt="Mesh 5"></p>
+<p><em>Figure 6: Mhmm, graphs.</em></p>
+<p>This network is essentially a combination of Examples 2 and 4, extrapolated, with some slight imagery changes to impress on the reader a larger sense of scale.</p>
+<h3 id="use-cases-5">Use Cases:</h3>
+<ul>
+<li>You&rsquo;ve created a mesh network that is now increasing in scale.</li>
+</ul>
+
+			</div>
+			
+			<div>
+				<ul id="tags">
+					
+					<li><a href="/tags/mesh-networking">mesh networking</a></li>
+					
+					<li><a href="/tags/linux">linux</a></li>
+					
+					<li><a href="/tags/raspberry-pi">raspberry pi</a></li>
+					
+				</ul>
+			</div>
+			
+			
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/post/try-hack-me-basic-pentesting/">TryHackMe Writeup - Basic Pentesting</a></li>
+				
+				<li><a href="/post/raspberry-pi-virtual-development/">Notes on Emulating a Raspberry Pi for Testing &amp; Development</a></li>
+				
+				<li><a href="/post/lets-do-a-pi-thing/">Provisioning a Raspberry Pi (without an SD Card Reader)</a></li>
+				
+				<li><a href="/post/notes-on-mesh-networking-basic-mesh-configurations/">Notes on Mesh Networking: Basic Mesh Configurations</a></li>
+				
+				<li><a href="/post/c64-instructions/">Notes on the 6510 instruction set</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<p>&copy; 2022 <a href="https://vo1rfx.ca/">VO1RFX</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VO1RFX</title>
+    <link>https://vo1rfx.ca/</link>
+    <description>Recent content on VO1RFX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 25 Jul 2020 13:06:33 -0230</lastBuildDate><atom:link href="https://vo1rfx.ca/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TryHackMe Writeup - Basic Pentesting</title>
+      <link>https://vo1rfx.ca/post/try-hack-me-basic-pentesting/</link>
+      <pubDate>Sat, 25 Jul 2020 13:06:33 -0230</pubDate>
+      
+      <guid>https://vo1rfx.ca/post/try-hack-me-basic-pentesting/</guid>
+      <description>Here&amp;rsquo;s my writeup for the Basic Pentesting challege on TryHackme. This challenge provides multiple &amp;lsquo;checkpoints&amp;rsquo; with hand-holding hints that are often dead giveaways to ensure that you&amp;rsquo;re on the right track and that you can make it through the challenge in order to absorb all of the knowledge. It&amp;rsquo;s much more about testing your basic proficiency with tools, not about testing your guessing skills, or how you fair left to your own devices.</description>
+    </item>
+    
+    <item>
+      <title>Notes on Emulating a Raspberry Pi for Testing &amp; Development</title>
+      <link>https://vo1rfx.ca/post/raspberry-pi-virtual-development/</link>
+      <pubDate>Wed, 19 Jun 2019 10:16:35 -0400</pubDate>
+      
+      <guid>https://vo1rfx.ca/post/raspberry-pi-virtual-development/</guid>
+      <description>Here are my personal notes while exploring how to emulate a Raspbian environment running on ARM for the purposes of &amp;ldquo;on the go&amp;rdquo; Raspberry Pi development. Note that this doesn&amp;rsquo;t have an provisions for emulating things like GPIO pins or other hardware, etc.
+Requirements  QEMU, with ARM support Raspbian .img (or distro of choice) Raspberry Pi QEMU kernel (there is more than one you can choose from)  # Set these to your own preferences IMAGE=~/Downloads/2019-04-08-rasbian-strech-lite.</description>
+    </item>
+    
+    <item>
+      <title>Fixing uniscan.pl on Arch-based distros</title>
+      <link>https://vo1rfx.ca/post/fix-uniscan-on-arch/</link>
+      <pubDate>Wed, 10 Apr 2019 16:57:19 -0230</pubDate>
+      
+      <guid>https://vo1rfx.ca/post/fix-uniscan-on-arch/</guid>
+      <description>When trying to install the helpful (but seemingly abandoned) uniscan.pl script for pentesting, I found that it didn&amp;rsquo;t work straight out of the box with Manjaro. Here&amp;rsquo;s how I got around it:
+Find the location of your uniscan install ➜ which uniscan /bin/uniscan This returns /bin/bash/uniscan which cleverly isn&amp;rsquo;t an executable, it&amp;rsquo;s just:
+#!/bin/sh cd /usr/share/uniscan perl uniscan.pl &amp;#34;$@&amp;#34; So our uniscan script is in /usr/share/uniscan:
+➜ /bin ls -l /usr/share/uniscan total 416 -rw-r--r-- 1 root root 5501 Apr 5 16:01 CHANGELOG.</description>
+    </item>
+    
+  </channel>
+</rss>

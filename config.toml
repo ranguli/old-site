@@ -1,0 +1,60 @@
+baseURL = "https://vo1rfx.ca/"
+theme = "archie"
+rssLimit = 20
+title = "VO1RFX"
+author = "Joshua Murphy"
+paginate = 20
+languageCode = "en"
+DefaultContentLanguage = "en"
+enableInlineShortcodes = true
+
+[params]
+  noindex = false
+  author = "Joshua Murphy"
+  description = "A blog about amateur radio and infosec."
+  menu_item_separator = " - "
+  [[params.social]]
+    icon = "github"
+    name = "GitHub"
+    url = "https://github.com/ranguli"
+  [[params.social]]
+    icon = "mastodon"
+    name = "Mastodon"
+    url = "https://mastodon.radio/@vo1rfx"
+  [params.style]
+    darkestColor = "#242930"
+    darkColor = "#353b43"
+    lightColor = "#afbac4"
+    lightestColor = "#ffffff"
+    primaryColor = "#FF6E39"
+
+# For hugo >= 0.60.0, enable inline HTML
+[markup.goldmark.renderer]
+unsafe = true
+
+[privacy]
+
+  [privacy.vimeo]
+    disabled = false
+    simple = true
+
+  [privacy.twitter]
+    disabled = false
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = false
+    simple = true
+
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true
+
+[services]
+
+  [services.instagram]
+    disableInlineCSS = true
+
+  [services.twitter]
+    disableInlineCSS = true

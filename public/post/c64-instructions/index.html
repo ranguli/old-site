@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Notes on the 6510 instruction set</title>
+	<meta name="description" content="A blog about amateur radio and infosec.">
+	<meta name="author" content="Joshua Murphy">
+	<link rel="stylesheet" href="/css/style.css">
+	
+</head>
+<body>
+	<header>
+	<a href="https://vo1rfx.ca/">VO1RFX</a>
+	
+	<nav>
+		<ul>
+			
+			<li><a href="/">Home</a></li>
+			
+			<li><a href="/tags/">Tags</a></li>
+			
+			<li><a href="/about/">About</a></li>
+			
+		</ul>
+	</nav>
+	
+</header>
+
+	
+	<main>
+		<article>
+            <h1>Notes on the 6510 instruction set</h1>
+			<time>18.04.2019 16:57</time>
+			<div>
+				<p>These are my notes from reading the Chapter 5, the section on Machine Language from <a href="https://www.commodore.ca/manuals/c64_programmers_reference/c64-programmers_reference_guide-05-basic_to_machine_language.pdf">Commodore 64 Programmers Reference Manual</a>. My reasoning for learning 6510 assembly is that it’s <a href="https://www.atarimagazines.com/compute/issue52/288_1_READERS_FEEDBACK_6502_6510_DIFFERENCES.php">compatible</a> with the 6502, which is known to be easy for beginners. Plus, variations of the 650x series are used in the NES, Apple II, and Atari 2600.</p>
+<h2 id="note-on-syntax">Note on syntax</h2>
+<ul>
+<li><code>$</code> in front of a value indicates a hexidecimal value</li>
+<li><code>#</code> indicates the following characters are a value (immediate mode). Not using this symbol indicates the contents of a memory location, or another register (absolute mode).</li>
+</ul>
+<h2 id="primer">Primer:</h2>
+<ul>
+<li>Remember one <code>byte</code> consists of 8 <code>bits</code> (a binary digit, either 0 or 1)</li>
+<li>Thus, the most a <code>byte</code> can store is <code>11111111</code> in binary, which is <code>$FF</code> in hex or <code>255</code> in decimal.
+<ul>
+<li>In order to describe a number &gt;255 to the C64, it must be split up into 2 or more bytes.</li>
+<li>For example, <code>LDA $102E</code> is expressed in memory as <code>$AD, $2E, $10</code>. The rightmost digits are the ‘low byte’ of the address, and the leftmost are the ‘high byte’. This is because the 6510 requires any address to be specified with its low byte first, then the high byte.</li>
+</ul>
+</li>
+</ul>
+<h2 id="accumulator-register">Accumulator Register</h2>
+<p>There accumulator register has instructions to copy memory contents into it, copy the register contents into a memory location, and modify its contents directly without affecting any memory. The only register with instructions for performing math.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#a6e22e">LDA</span> <span style="color:#75715e">#$05    ; load value into the accumulator register, which is stored in $A9 for this instruction if in immediate mode, or $AD in absolute mode.
+</span></code></pre></div><h2 id="x-index-register">X Index Register</h2>
+<p>There are instructions for the X register that do most of the same things as the accumlator. As well, there are some things that only the X register can do.</p>
+<h2 id="y-index-register">Y Index Register</h2>
+<p>Has the same instructions as the accumulator and x index register, as well as some other unique instructions.</p>
+<h2 id="status-register">Status Register</h2>
+<p>Consists of 8 flags, each of which indicates a status.</p>
+<h2 id="program-counter">Program Counter</h2>
+<p>Contains the address of the current machine language instruction being executed. It is constantly changing because the OS is always running.</p>
+<h2 id="stack-pointer">Stack Pointer</h2>
+<p>Contains the location of the first empty place on the stack. Used for temporary storage by programs and the computer.</p>
+<h2 id="inputoutput-port">Input/Output Port</h2>
+<p>Appears at memory locations 0 (Data Direction Register) and 1 (PORT). It is an 8-bit port. On the C64 the register is used for memory managed in order to control more than 64k of ROM and RAM.</p>
+
+			</div>
+			
+			<div>
+				<ul id="tags">
+					
+					<li><a href="/tags/c64">c64</a></li>
+					
+					<li><a href="/tags/6502">6502</a></li>
+					
+					<li><a href="/tags/asm">asm</a></li>
+					
+				</ul>
+			</div>
+			
+			
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/post/try-hack-me-basic-pentesting/">TryHackMe Writeup - Basic Pentesting</a></li>
+				
+				<li><a href="/post/raspberry-pi-virtual-development/">Notes on Emulating a Raspberry Pi for Testing &amp; Development</a></li>
+				
+				<li><a href="/post/lets-do-a-pi-thing/">Provisioning a Raspberry Pi (without an SD Card Reader)</a></li>
+				
+				<li><a href="/post/notes-on-mesh-networking-basic-mesh-configurations/">Notes on Mesh Networking: Basic Mesh Configurations</a></li>
+				
+				<li><a href="/post/c64-instructions/">Notes on the 6510 instruction set</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<p>&copy; 2022 <a href="https://vo1rfx.ca/">VO1RFX</a></p>
+</footer>
+
+</body>
+</html>
