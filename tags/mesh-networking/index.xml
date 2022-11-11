@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mesh networking on VO1RFX</title>
+    <link>https://vo1rfx.ca/tags/mesh-networking/</link>
+    <description>Recent content in mesh networking on VO1RFX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 14 Jun 2019 10:48:46 -0400</lastBuildDate><atom:link href="https://vo1rfx.ca/tags/mesh-networking/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes on Mesh Networking: Basic Mesh Configurations</title>
+      <link>https://vo1rfx.ca/post/notes-on-mesh-networking-basic-mesh-configurations/</link>
+      <pubDate>Fri, 14 Jun 2019 10:48:46 -0400</pubDate>
+      
+      <guid>https://vo1rfx.ca/post/notes-on-mesh-networking-basic-mesh-configurations/</guid>
+      <description>During my exploration of Mesh Networking with Tomesh, I realized that mesh networking can look like a lot of different things.
+Example 0: Simple One Node Proof of Concept Figure 0: The simplest mesh network configuration.
+The simplest &amp;ldquo;proof of concept&amp;rdquo; configuration to get your own mesh network environment up and running is to create a tomesh node, then connect to it with an Ethernet cable. The node will automatically assign an IPv6 address to the client via DHCP.</description>
+    </item>
+    
+  </channel>
+</rss>

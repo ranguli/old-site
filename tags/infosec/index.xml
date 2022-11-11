@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>infosec on VO1RFX</title>
+    <link>https://vo1rfx.ca/tags/infosec/</link>
+    <description>Recent content in infosec on VO1RFX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 25 Jul 2020 13:06:33 -0230</lastBuildDate><atom:link href="https://vo1rfx.ca/tags/infosec/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TryHackMe Writeup - Basic Pentesting</title>
+      <link>https://vo1rfx.ca/post/try-hack-me-basic-pentesting/</link>
+      <pubDate>Sat, 25 Jul 2020 13:06:33 -0230</pubDate>
+      
+      <guid>https://vo1rfx.ca/post/try-hack-me-basic-pentesting/</guid>
+      <description>Here&amp;rsquo;s my writeup for the Basic Pentesting challege on TryHackme. This challenge provides multiple &amp;lsquo;checkpoints&amp;rsquo; with hand-holding hints that are often dead giveaways to ensure that you&amp;rsquo;re on the right track and that you can make it through the challenge in order to absorb all of the knowledge. It&amp;rsquo;s much more about testing your basic proficiency with tools, not about testing your guessing skills, or how you fair left to your own devices.</description>
+    </item>
+    
+  </channel>
+</rss>
